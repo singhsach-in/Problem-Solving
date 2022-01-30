@@ -1,0 +1,23 @@
+Number 989
+Link https://leetcode.com/problems/add-to-array-form-of-integer/
+
+class Solution {
+    public List<Integer> addToArrayForm(int[] num, int k) {
+       ArrayList<Integer> al = new ArrayList<>();
+       int len = num.length;
+        while(k!=0||len!=0)
+       {
+           if(len>0)
+           {
+               int tmp = k%10; // 1
+               int tmp2 = (tmp+num[--len]); // 1 + 4=5, (8+7)=15
+               al.add(0,tmp2%10);// 1 , 15%10 = 5
+               tmp2 = tmp2/10; //15/10=1
+               k = k/10+ tmp2 ;
+           }
+            else
+            { al.add(0,k%10); k = k/10; }
+       }
+        return al;
+    }
+}
