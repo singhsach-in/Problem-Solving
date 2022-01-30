@@ -1,0 +1,66 @@
+// Number 885
+// link https://leetcode.com/problems/spiral-matrix-iii/
+class Solution {
+    public int[][] spiralMatrixIII(int rows, int cols, int rStart, int cStart) {
+        
+        //first we need an 2D array to store all the indices
+        //of rows = r*c and columns = 2 .
+        int[][] res = new int[rows*cols][2];
+        
+        //edge case
+        int size = rows*cols ; 
+        //since initial positions index is given 
+        res[0] = new int[]{ rStart , cStart};
+        if(size == 1) { return res ; }
+        
+        //we need an another array which change row and col values
+        //so that we can move in spiral order.
+        int[][] dir = { {0,1} , {1,0} , {0,-1} , {-1,0} };
+        //now why I took these specific values in my dir array
+        //bcoz if you notice the given examples , You will see a
+        //pattern.
+        //First we go east column increases & row remains constant so {0,1}
+        //Second we go south row increases & column remains constant so {1,0}
+        //Third we go west column decreases & row remains constant so {0,-1}
+        //Fourth we go north row decreases & column remains constant so{-1,0}
+        
+        //now since we are moving in 4 directions so after a complete
+        //revolution we need do reset direction to east 
+        //or we can say reset dir arr to its begining.
+        int d = 0 ; // this variable gonna help us in his task.
+        int len = 0; // this will decide how much length to go in a direction
+        
+       
+        int count = 1 ; // this will be our counter var to break the loop
+        // we put 1 element in res thats why count = 1.
+        
+        //now a loop to get all other indices in spiral manner
+        
+        while(count<rows*cols)
+        {
+            if(d==0||d==2) { len++ ; } //1,1,2,2,3,3,4,4
+            //Above condition will helps in achieving the repeating sequence
+            
+            for(int i=0;i<len;i++)
+            {
+                rStart = rStart + dir[d][0]; //increase or decrease row
+                cStart = cStart + dir[d][1]; //increase or decrease column
+                
+                if(rStart>=0 && rStart<rows && cStart>=0 && cStart<cols)
+                {
+                    //Above condition will check if the row & col values
+                    //are in the given matrix or not. If true then we will
+                    //add them in our result array.
+                    res[count++] = new int[]{ rStart , cStart };
+                }
+            }
+            //we have to change values of d in order to change the diection
+            
+            d = ( d+1 ) % 4 ; // this will reset the value to 0 after a                                     // revolution.
+        }
+        
+        return res;
+        
+        
+    }
+}
